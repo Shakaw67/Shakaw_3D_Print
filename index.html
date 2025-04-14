@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo Shakaw 3D Print</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: linear-gradient(to bottom, #0057b7, #06abff);
+    }
+    .header {
+      text-align: center;
+      padding: 40px 20px 20px;
+      color: white;
+    }
+    .header img {
+      width: 180px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+      border: 4px solid white;
+    }
+    .header h1 {
+      margin: 10px 0 5px;
+      font-size: 28px;
+    }
+    .header a {
+      display: inline-block;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      margin-top: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 6px 12px;
+      border-radius: 20px;
+      transition: background 0.3s;
+    }
+    .header a:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+    .catalog-page {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .product {
+      display: flex;
+      flex-direction: row;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .image-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    .main-img {
+      width: 300px;
+      height: 300px;
+      object-fit: contain;
+      background-color: #f5f5f5;
+      padding: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .main-img:hover {
+      transform: scale(1.02);
+    }
+    .thumbnail-container {
+      display: flex;
+      gap: 5px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+    .thumbnail-container img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .thumbnail-container img:hover {
+      border-color: #0077cc;
+    }
+    .product-details {
+      padding: 60px 20px 20px 20px;
+      flex: 1;
+    }
+    .product-details h2 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+    .product-details p {
+      margin: 5px 0;
+      color: #333;
+    }
+    .price {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #009688;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.9);
+    }
+    .modal-content {
+      margin: 10% auto;
+      display: block;
+      max-width: 90%;
+    }
+    .modal-content img {
+      width: 100%;
+    }
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 35px;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      .product {
+        flex-direction: column;
+        align-items: center;
+      }
+      .product-details {
+        max-width: 100%;
+      }
+    }
+
+    #backToTopBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 30px;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      display: none;
+    }
+
+    #backToTopBtn:hover {
+      background-color: #005fa3;
+    }
+    
+    #interestPanel {
+      display: none;
+      position: fixed;
+      right: 30px;
+      bottom: 80px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 300px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      z-index: 1001;
+    }
+    
+    #interestList {
+      list-style: none;
+      padding: 0;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .interest-btn {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      z-index: 1000;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 30px;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="https://shakaw67.github.io/Shakaw3DPrint/Logo.PNG" alt="Logo Shakaw 3D Print">
+    <h1>Shakaw 3D Print</h1>
+    <a href="https://www.instagram.com/shakaw3dprint" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" style="width: 20px; vertical-align: middle; margin-right: 6px;">
+      @shakaw3dprint
+    </a>
+  </div>
+
+  <div class="catalog-page" id="catalog"></div>
+
+  <div id="imgModal" class="modal">
+    <span class="close" onclick="document.getElementById('imgModal').style.display='none'">&times;</span>
+    <div class="modal-content">
+      <img id="modalImg" src="" alt="Imagem ampliada">
+    </div>
+  </div>
+
+  <!-- Botão flutuante de voltar ao topo -->
+  <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" id="backToTopBtn" title="Voltar ao topo">⬆️ Topo</button>
+
+  <!-- Painel de interesses -->
+  <div id="interestPanel">
+    <h3>Lista de interesses</h3>
+    <ul id="interestList"></ul>
+    <button onclick="sendInterests()" style="margin-top: 10px; padding: 8px 12px; background: #0077cc; color: white; border: none; border-radius: 5px; cursor: pointer;">Enviar por e-mail</button>
+  </div>
+
+  <!-- Botão flutuante -->
+  <button onclick="toggleInterestPanel()" class="interest-btn">💚 Ver interesses</button>
+
+  <script>
+    const catalog = document.getElementById("catalog");
+    const interests = [];
+
+    for (let i = 1; i <= 80; i++) {
+      const index = i.toString().padStart(2, '0');
+
+      const product = document.createElement('div');
+      product.className = 'product';
+
+      const imageColumn = document.createElement('div');
+      imageColumn.className = 'image-column';
+
+      const mainImg = document.createElement('img');
+      mainImg.src = `https://shakaw67.github.io/Shakaw3DPrint/${index}.PNG`;
+      mainImg.alt = `Produto ${i}`;
+      mainImg.className = 'main-img';
+      mainImg.onclick = function () {
+        document.getElementById('imgModal').style.display = 'block';
+        document.getElementById('modalImg').src = this.src;
+      };
+
+      const thumbnails = document.createElement('div');
+      thumbnails.className = 'thumbnail-container';
+
+      const mainThumb = document.createElement('img');
+      mainThumb.src = mainImg.src;
+      mainThumb.alt = `Produto ${i} ângulo 0`;
+      mainThumb.onclick = function () {
+        mainImg.src = this.src;
+      };
+      thumbnails.appendChild(mainThumb);
+
+      for (let j = 1; j <= 5; j++) {
+        const thumb = document.createElement('img');
+        thumb.src = `https://shakaw67.github.io/Shakaw3DPrint/${index}_${j}.PNG`;
+        thumb.alt = `Produto ${i} ângulo ${j}`;
+        thumb.onerror = function () { this.remove(); };
+        thumb.onclick = function () {
+          mainImg.src = this.src;
+        };
+        thumbnails.appendChild(thumb);
+      }
+
+      imageColumn.appendChild(mainImg);
+
+      const details = document.createElement('div');
+      details.className = 'product-details';
+
+      let descricao = 'Modelo <br> Imagem Real <br> Escala 1/18. Tamanho entre 8cm e 11cm de altura.';
+      let preco = 'R$ 60,00';
+      if (i === 60) {
+        descricao = 'Modelo <br> Imagem Real <br> Escala 1/18.';
+        preco = 'R$ 90,00';
+      }
+
+      details.innerHTML = `
+        <h2>Código ${i}</h2>
+        <p><strong>Descrição:</strong> ${descricao}</p>
+        <p class="price">${preco}</p>
+      `;
+
+      // Adiciona botão de interesse
+      const interestBtn = document.createElement('button');
+      interestBtn.textContent = 'Adicionar aos interesses';
+      interestBtn.style.marginTop = '10px';
+      interestBtn.style.padding = '8px 12px';
+      interestBtn.style.backgroundColor = '#0077cc';
+      interestBtn.style.color = 'white';
+      interestBtn.style.border = 'none';
+      interestBtn.style.borderRadius = '5px';
+      interestBtn.style.cursor = 'pointer';
+      interestBtn.onclick = function () {
+        addToInterests(i, descricao, preco, mainImg.src);
+        interestBtn.textContent = 'Adicionado!';
+        interestBtn.disabled = true;
+      };
+
+      details.appendChild(interestBtn);
+
+      // Só adiciona o container de miniaturas se ele tiver pelo menos uma imagem válida
+      setTimeout(() => {
+        if (thumbnails.children.length > 0) {
+          imageColumn.appendChild(thumbnails);
+        }
+      }, 0);
+
+      product.appendChild(imageColumn);
+      product.appendChild(details);
+      catalog.appendChild(product);
+    }
+
+    // Mostrar botão de voltar ao topo ao rolar a página
+    const btn = document.getElementById("backToTopBtn");
+    window.onscroll = function() {
+      btn.style.display = window.scrollY > 200 ? "block" : "none";
+    };
+    
+    function addToInterests(codigo, descricao, preco, imagem) {
+      interests.push({ codigo, descricao, preco, imagem });
+      updateInterestList();
+    }
+
+    function updateInterestList() {
+      const list = document.getElementById("interestList");
+      list.innerHTML = '';
+      
+      if (interests.length === 0) {
+        list.innerHTML = '<li style="color: gray;">Nenhum item adicionado.</li>';
+        return;
+      }
+      
+      interests.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <div style="margin-bottom: 10px;">
+            <strong>Código ${item.codigo}</strong><br>
+            <small>${item.descricao}</small><br>
+            <strong>${item.preco}</strong><br>
+            <img src="${item.imagem}" style="width: 50px; margin-top: 5px;"><br>
+            <button onclick="removeInterest(${index})" style="margin-top: 5px; padding: 4px 8px; font-size: 12px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Remover</button>
+          </div>
+        `;
+        list.appendChild(li);
+      });
+    }
+
+    function removeInterest(index) {
+      interests.splice(index, 1);
+      updateInterestList();
+    }
+
+    function toggleInterestPanel() {
+      const panel = document.getElementById("interestPanel");
+      panel.style.display = panel.style.display === "none" ? "block" : "none";
+    }
+
+    function sendInterests() {
+      const formWindow = window.open('', '_blank');
+      const interestText = interests.map(item => 
+        `Código ${item.codigo}
+        Descrição: ${item.descricao.replace(/<br>/g, '\n')}
+        Preço: ${item.preco}`
+      ).join('\n\n');
+
+      const html = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Formulário de Interesse</title>
+        </head>
+        <body>
+          <h2>Formulário de interesse</h2>
+          <form action="mailto:shakaw3dprint@hotmail.com" method="POST" enctype="text/plain">
+            <label>Nome:</label><br><input type="text" name="Nome" required><br><br>
+            <label>E-mail:</label><br><input type="email" name="Email" required><br><br>
+            <label>Mensagem:</label><br><textarea name="Mensagem" rows="10" cols="40">${interestText}</textarea><br><br>
+            <button type="submit">Enviar</button>
+          </form>
+        </body>
+        </html>
+      `;
+
+      formWindow.document.write(html);
+      formWindow.document.close();
+    }
+  </script>
+</body>
+</html>
