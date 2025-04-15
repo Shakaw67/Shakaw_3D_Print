@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -81,6 +80,14 @@
       margin-top: 10px;
       flex-wrap: wrap;
       justify-content: flex-start;
+    }
+    .thumbnail-container:empty::after {
+      content: "Sem miniaturas adicionais";
+      color: #999;
+      font-size: 12px;
+      padding: 10px;
+      text-align: center;
+      display: block;
     }
     .thumbnail-container img {
       width: 50px;
@@ -330,6 +337,35 @@
     const catalog = document.getElementById("catalog");
     const interests = [];
 
+    // Objeto com os preços especiais
+    const precosEspeciais = {
+      44: 'R$ 45,00',
+      45: 'R$ 45,00',
+      46: 'Por favor consultar com vendedor',
+      47: 'Por favor consultar com vendedor',
+      48: 'Por favor consultar com vendedor',
+      60: 'R$ 90,00'
+      // Adicione mais produtos especiais aqui conforme necessário
+    };
+
+    // Objeto com descrições especiais (apenas para produtos que diferem da descrição padrão)
+    const descricoesEspeciais = {
+      60: 'Modelo <br> Imagem Real <br> Escala 1/18.'
+      // Adicione mais descrições especiais aqui conforme necessário
+    };
+
+    // Função para verificar se uma imagem existe
+    function checkImageExists(url, callback) {
+      const img = new Image();
+      img.onload = function() {
+        callback(true);
+      };
+      img.onerror = function() {
+        callback(false);
+      };
+      img.src = url;
+    }
+
     // Carrega os produtos
     for (let i = 1; i <= 80; i++) {
       const index = i.toString().padStart(2, '0');
@@ -344,7 +380,7 @@
       mainImg.src = `https://shakaw3dprint.github.io/Shakaw_3D_Print/${index}.png`;
       mainImg.alt = `Produto ${i}`;
       mainImg.className = 'main-img';
-      mainImg.onclick = function () {
+      mainImg.onclick = function() {
         document.getElementById('imgModal').style.display = 'block';
         document.getElementById('modalImg').src = this.src;
       };
@@ -352,36 +388,43 @@
       const thumbnails = document.createElement('div');
       thumbnails.className = 'thumbnail-container';
 
+      // Adiciona a miniatura principal
       const mainThumb = document.createElement('img');
       mainThumb.src = mainImg.src;
       mainThumb.alt = `Produto ${i} ângulo 0`;
-      mainThumb.onclick = function () {
+      mainThumb.onclick = function() {
         mainImg.src = this.src;
       };
       thumbnails.appendChild(mainThumb);
 
+      // Verifica e adiciona miniaturas adicionais
       for (let j = 1; j <= 5; j++) {
-        const thumb = document.createElement('img');
-        thumb.src = `https://shakaw3dprint.github.io/Shakaw_3D_Print/${index}_${j}.png`;
-        thumb.alt = `Produto ${i} ângulo ${j}`;
-        thumb.onerror = function () { this.remove(); };
-        thumb.onclick = function () {
-          mainImg.src = this.src;
-        };
-        thumbnails.appendChild(thumb);
+        const thumbUrl = `https://shakaw3dprint.github.io/Shakaw_3D_Print/${index}_${j}.png`;
+        
+        checkImageExists(thumbUrl, function(exists) {
+          if (exists) {
+            const thumb = document.createElement('img');
+            thumb.src = thumbUrl;
+            thumb.alt = `Produto ${i} ângulo ${j}`;
+            thumb.onclick = function() {
+              mainImg.src = this.src;
+            };
+            thumbnails.appendChild(thumb);
+          }
+        });
       }
 
       imageColumn.appendChild(mainImg);
+      imageColumn.appendChild(thumbnails);
 
       const details = document.createElement('div');
       details.className = 'product-details';
 
-      let descricao = 'Modelo <br> Imagem Real <br> Escala 1/18. Tamanho entre 8cm e 11cm de altura. <br> Observação: Os itens do cenário não acompanham o produto.';
-      let preco = 'R$ 60,00';
-      if (i === 60) {
-        descricao = 'Modelo <br> Imagem Real <br> Escala 1/18.';
-        preco = 'R$ 90,00';
-      }
+      // Define descrição e preço usando os objetos de mapeamento
+      let descricao = descricoesEspeciais[i] || 
+        'Modelo <br> Imagem Real <br> Escala 1/18. Tamanho entre 8cm e 11cm de altura. <br> Observação: Os itens do cenário não acompanham o produto.';
+      
+      let preco = precosEspeciais[i] || 'R$ 60,00'; // Valor padrão
 
       details.innerHTML = `
         <h2>Código ${i}</h2>
@@ -399,20 +442,13 @@
       interestBtn.style.border = 'none';
       interestBtn.style.borderRadius = '5px';
       interestBtn.style.cursor = 'pointer';
-      interestBtn.onclick = function () {
+      interestBtn.onclick = function() {
         addToInterests(i, descricao, preco, mainImg.src);
         interestBtn.textContent = 'Adicionado!';
         interestBtn.disabled = true;
       };
 
       details.appendChild(interestBtn);
-
-      // Só adiciona o container de miniaturas se ele tiver pelo menos uma imagem válida
-      setTimeout(() => {
-        if (thumbnails.children.length > 0) {
-          imageColumn.appendChild(thumbnails);
-        }
-      }, 0);
 
       product.appendChild(imageColumn);
       product.appendChild(details);
