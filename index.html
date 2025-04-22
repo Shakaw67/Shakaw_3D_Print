@@ -534,9 +534,9 @@
       const carousel = document.getElementById('carousel');
       const indicators = document.getElementById('carouselIndicators');
       
-      // Verifica quais imagens existem (de c_1.jpg até c_50.jpg)
+      // Verifica quais imagens existem (de compressed_1.jpg até compressed_50.jpg)
       for (let i = 1; i <= 50; i++) {
-        const imgUrl = `https://shakaw3dprint.github.io/Shakaw_3D_Print/uploads/c_${i}.jpg`;
+        const imgUrl = `https://shakaw3dprint.github.io/Shakaw_3D_Print/uploads/compressed_${i}.jpg`;
         
         await new Promise(resolve => {
           checkImageExists(imgUrl, function(exists) {
