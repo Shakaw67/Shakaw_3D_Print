@@ -534,9 +534,9 @@
       const carousel = document.getElementById('carousel');
       const indicators = document.getElementById('carouselIndicators');
       
-      // Verifica quais imagens existem (de compressed_1.jpg até compressed_50.jpg)
+      // Verifica quais imagens existem (de c_1.jpg até c_50.jpg)
       for (let i = 1; i <= 50; i++) {
-        const imgUrl = `https://shakaw3dprint.github.io/Shakaw_3D_Print/uploads/carrossel/compressed_${i}.jpg`;
+        const imgUrl = `https://shakaw3dprint.github.io/Shakaw_3D_Print/uploads/carrossel/${i}.jpg`;
         
         await new Promise(resolve => {
           checkImageExists(imgUrl, function(exists) {
@@ -635,7 +635,7 @@
     // Função para criar um produto
     async function createProduct(i) {
       const index = i.toString().padStart(2, '0');
-      const mainImageUrl = `https://shakaw3dprint.github.io/Shakaw_3D_Print/uploads/compressed_${index}.png`;
+      const mainImageUrl = `https://shakaw3dprint.github.io/Shakaw_3D_Print/uploads/${index}.png`;
       
       return new Promise((resolve) => {
         checkImageExists(mainImageUrl, (exists) => {
@@ -673,7 +673,7 @@
 
           // Verifica e adiciona miniaturas adicionais
           for (let j = 1; j <= 5; j++) {
-            const thumbUrl = `https://shakaw3dprint.github.io/Shakaw_3D_Print/uploads/compressed_${index}_${j}.png`;
+            const thumbUrl = `https://shakaw3dprint.github.io/Shakaw_3D_Print/uploads/${index}_${j}.png`;
             
             checkImageExists(thumbUrl, function(exists) {
               if (exists) {
