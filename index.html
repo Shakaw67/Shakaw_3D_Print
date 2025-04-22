@@ -392,7 +392,7 @@
 </head>
 <body>
   <div class="header">
-    <img src="https://shakaw3dprint.github.io/Shakaw_3D_Print/Logo.PNG" alt="Logo Shakaw 3D Print">
+    <img src="https://shakaw3dprint.github.io/Shakaw_3D_Print/uploads/Logo.PNG" alt="Logo Shakaw 3D Print">
     <h1>Shakaw 3D Print</h1>
     <a href="https://www.instagram.com/shakaw3dprint" target="_blank">
       <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" style="width: 20px; vertical-align: middle; margin-right: 6px;">
@@ -536,7 +536,7 @@
       
       // Verifica quais imagens existem (de c_1.jpg até c_50.jpg)
       for (let i = 1; i <= 50; i++) {
-        const imgUrl = `https://shakaw3dprint.github.io/Shakaw_3D_Print/c_${i}.jpg`;
+        const imgUrl = `https://shakaw3dprint.github.io/Shakaw_3D_Print/uploads/c_${i}.jpg`;
         
         await new Promise(resolve => {
           checkImageExists(imgUrl, function(exists) {
@@ -635,7 +635,7 @@
     // Função para criar um produto
     async function createProduct(i) {
       const index = i.toString().padStart(2, '0');
-      const mainImageUrl = `https://shakaw3dprint.github.io/Shakaw_3D_Print/${index}.png`;
+      const mainImageUrl = `https://shakaw3dprint.github.io/Shakaw_3D_Print/uploads/${index}.png`;
       
       return new Promise((resolve) => {
         checkImageExists(mainImageUrl, (exists) => {
@@ -673,7 +673,7 @@
 
           // Verifica e adiciona miniaturas adicionais
           for (let j = 1; j <= 5; j++) {
-            const thumbUrl = `https://shakaw3dprint.github.io/Shakaw_3D_Print/${index}_${j}.png`;
+            const thumbUrl = `https://shakaw3dprint.github.io/Shakaw_3D_Print/uploads/${index}_${j}.png`;
             
             checkImageExists(thumbUrl, function(exists) {
               if (exists) {
