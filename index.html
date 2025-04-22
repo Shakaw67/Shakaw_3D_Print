@@ -635,7 +635,7 @@
     // Função para criar um produto
     async function createProduct(i) {
       const index = i.toString().padStart(2, '0');
-      const mainImageUrl = `https://shakaw3dprint.github.io/Shakaw_3D_Print/uploads/${index}.png`;
+      const mainImageUrl = `https://shakaw3dprint.github.io/Shakaw_3D_Print/uploads/compressed_${index}.png`;
       
       return new Promise((resolve) => {
         checkImageExists(mainImageUrl, (exists) => {
