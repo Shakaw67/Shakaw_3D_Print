@@ -985,16 +985,20 @@
         return;
       }
       
-      interests.length = 0;
+        interests.length = 0;
       updateInterestList();
-});
-// Inicializa a página
-window.onload = function() {
-  initCarousel();
-  loadProducts();
-  
-  const btn = document.getElementById("backToTopBtn");
-  window.onscroll = function() {
-    btn.style.display = window.scrollY > 200 ? "block" : "none";
-  };
-};
+    });
+
+    // Inicializa a página
+    window.onload = function() {
+      initCarousel();
+      loadProducts();
+      
+      const btn = document.getElementById("backToTopBtn");
+      window.onscroll = function() {
+        btn.style.display = window.scrollY > 200 ? "block" : "none";
+      };
+    };
+  </script>
+</body>
+</html>
