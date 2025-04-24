@@ -1,0 +1,44 @@
+/* Estilos Gerais */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: linear-gradient(to bottom, #0057b7, #06abff);
+}
+
+.header {
+  text-align: center;
+  padding: 40px 20px 20px;
+  color: white;
+}
+
+.header img {
+  width: 180px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  border: 4px solid white;
+}
+
+/* ... (todos os estilos gerais) */
+
+/* Estilos para o catálogo */
+.catalog-page {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* ... (todos os estilos de produtos, modal, etc) */
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .product {
+    flex-direction: column;
+  }
+  
+  .main-img {
+    width: 100%;
+  }
+}

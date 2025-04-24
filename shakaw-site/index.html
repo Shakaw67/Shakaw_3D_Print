@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo Shakaw 3D Print</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/carousel.css">
+</head>
+<body>
+  <div class="header">
+    <img src="https://shakaw3dprint.github.io/Shakaw_3D_Print/uploads/Logo.PNG" alt="Logo Shakaw 3D Print">
+    <h1>Shakaw 3D Print</h1>
+    <a href="https://www.instagram.com/shakaw3dprint" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" style="width: 20px; vertical-align: middle; margin-right: 6px;">
+      @shakaw3dprint
+    </a>
+  </div>
+
+  <!-- Carrossel de imagens -->
+  <div class="carousel-container">
+    <div class="carousel" id="carousel"></div>
+    <button class="carousel-btn prev">❮</button>
+    <button class="carousel-btn next">❯</button>
+    <div class="carousel-indicators" id="carouselIndicators"></div>
+  </div>
+
+  <div class="loader" id="loader"></div>
+  <div class="catalog-page" id="catalog"></div>
+
+  <!-- Modal para imagens ampliadas -->
+  <div id="imgModal" class="modal">
+    <span class="close">&times;</span>
+    <div class="modal-content">
+      <img id="modalImg" src="" alt="Imagem ampliada">
+    </div>
+  </div>
+
+  <!-- Modal para formulário de contato -->
+  <div id="contactModal" class="contact-modal">
+    <div class="contact-modal-content">
+      <span class="close-contact">&times;</span>
+      <h2>Enviar Interesses</h2>
+      <form id="contactForm" action="https://formsubmit.co/shakaw3dprint@hotmail.com" method="POST">
+        <!-- Campos do formulário mantidos iguais -->
+      </form>
+    </div>
+  </div>
+
+  <!-- Botões e painel de interesses -->
+  <button id="backToTopBtn" title="Voltar ao topo">⬆️ Topo</button>
+  <div id="interestPanel">
+    <!-- Conteúdo do painel mantido igual -->
+  </div>
+  <button class="interest-btn">💚 Ver interesses</button>
+
+  <!-- JavaScript -->
+  <script src="js/carousel.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

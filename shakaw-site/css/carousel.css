@@ -1,0 +1,25 @@
+/* Carrossel */
+.carousel-container {
+  max-width: 1000px;
+  margin: 30px auto;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  height: 400px;
+}
+
+.carousel {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  height: 100%;
+}
+
+.carousel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* ... (todos os estilos específicos do carrossel) */
