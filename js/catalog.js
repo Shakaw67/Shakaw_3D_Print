@@ -23,7 +23,7 @@ let currentZoom = 1;
     // Funções do carrossel
     async function createProduct(i) {
       const index = i.toString().padStart(2, '0');
-      const mainImageUrl = `https://shakaw3dprint.github.io/Shakaw_3D_Print/uploads/${index}.png`;
+      const mainImageUrl = `uploads/${index}.png`;
       
       return new Promise((resolve) => {
         checkImageExists(mainImageUrl, (exists) => {
@@ -82,7 +82,7 @@ let currentZoom = 1;
 
           // Verifica e adiciona miniaturas adicionais
           for (let j = 1; j <= 5; j++) {
-            const thumbUrl = `https://shakaw3dprint.github.io/Shakaw_3D_Print/uploads/${index}_${j}.png`;
+            const thumbUrl = `uploads/${index}_${j}.png`;
             
             checkImageExists(thumbUrl, function(exists) {
               if (exists) {
