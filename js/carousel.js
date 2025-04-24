@@ -15,7 +15,7 @@ let currentZoom = 1;
       
       // Verifica quais imagens existem (de c_1.jpg até c_50.jpg)
       for (let i = 1; i <= 50; i++) {
-        const imgUrl = `https://shakaw3dprint.github.io/Shakaw_3D_Print/uploads/carrossel/c_${i}.jpg`;
+        const imgUrl = `uploads/carrossel/c_${i}.jpg`;
         
         await new Promise(resolve => {
           checkImageExists(imgUrl, function(exists) {
