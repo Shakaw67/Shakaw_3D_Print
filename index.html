@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Catálogo Shakaw 3D Print</title>
   <style>
     body {
@@ -14,6 +14,7 @@
       text-align: center;
       padding: 40px 20px 20px;
       color: white;
+      position: relative;
     }
     .header img {
       width: 180px;
@@ -25,12 +26,17 @@
       margin: 10px 0 5px;
       font-size: 28px;
     }
+    .header-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 15px;
+    }
     .header a {
       display: inline-block;
       color: white;
       font-weight: bold;
       text-decoration: none;
-      margin-top: 10px;
       background: rgba(255, 255, 255, 0.1);
       padding: 6px 12px;
       border-radius: 20px;
@@ -58,7 +64,8 @@
     .carousel img {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* Garante que a imagem cubra todo o container mantendo proporção */
+      object-fit: contain; /* Alterado de 'cover' para 'contain' para mostrar a imagem completa */
+      background-color: #f5f5f5; /* Fundo para imagens transparentes */
       flex-shrink: 0;
     }
     .carousel-btn {
@@ -131,7 +138,7 @@
     .main-img {
       width: 300px;
       height: 300px;
-      object-fit: contain;
+      object-fit: contain; /* Alterado para 'contain' para mostrar a imagem completa */
       background-color: #f5f5f5;
       padding: 10px;
       cursor: pointer;
@@ -198,9 +205,13 @@
       margin: 10% auto;
       display: block;
       max-width: 90%;
+      max-height: 80vh;
+      text-align: center;
     }
     .modal-content img {
-      width: 100%;
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
     }
     .close {
       position: absolute;
@@ -394,10 +405,15 @@
   <div class="header">
     <img src="https://shakaw3dprint.github.io/Shakaw_3D_Print/uploads/Logo.PNG" alt="Logo Shakaw 3D Print">
     <h1>Shakaw 3D Print</h1>
-    <a href="https://www.instagram.com/shakaw3dprint" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" style="width: 20px; vertical-align: middle; margin-right: 6px;">
-      @shakaw3dprint
-    </a>
+    <div class="header-links">
+      <a href="https://www.instagram.com/shakaw3dprint" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" style="width: 20px; vertical-align: middle; margin-right: 6px;">
+        @shakaw3dprint
+      </a>
+      <a href="outros-projetos.html" target="_blank">
+        Outros Projetos
+      </a>
+    </div>
   </div>
 
   <!-- Carrossel de imagens -->
