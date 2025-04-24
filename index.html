@@ -574,8 +574,8 @@
 
     // Objeto com descrições especiais
     const descricoesEspeciais = {
-      01: 'Modelo + Esteira <br> Imagem Real <br> Escala 1/18. Tamanho entre 8cm e 11cm de altura. <br> Observação: Os itens do cenário não acompanham o produto.',
-      02: 'Modelo + 01 Pneu Resina <br> Imagem Real <br> Escala 1/18. Tamanho entre 8cm e 11cm de altura. <br> Observação: Os itens do cenário não acompanham o produto.',
+      01: 'Modelo + Esteira <br> Imagem Real <br> Escala 1/18. Tamanho entre 8cm e 11cm de altura. <br><strong>Observação:</strong>: Os itens do cenário não acompanham o produto.',
+      02: 'Modelo + 01 Pneu Resina <br> Imagem Real <br> Escala 1/18. Tamanho entre 8cm e 11cm de altura. <br><strong>Observação:</strong>: Os itens do cenário não acompanham o produto.',
       09: 'Modelo <br> Imagem Ilustrativa <br> Escala 1/18.',
       12: 'Modelo <br> Imagem Ilustrativa <br> Escala 1/18.',
       14: 'Modelo <br> Imagem Ilustrativa <br> Escala 1/18.',
@@ -586,8 +586,8 @@
       19: 'Modelo <br> Imagem Ilustrativa <br> Escala 1/18.',
       24: 'Modelo <br> Imagem Ilustrativa <br> Escala 1/18.',
       25: 'Modelo <br> Imagem Ilustrativa <br> Escala 1/18.',
-      26: 'Modelo + Esteira <br> Imagem Real <br> Escala 1/18. Tamanho entre 8cm e 11cm de altura. <br> Observação: Os itens do cenário não acompanham o produto.',
-      29: 'Modelo + 01 Pneu Resina <br> Imagem Real <br> Escala 1/18. Tamanho entre 8cm e 11cm de altura. <br> Observação: Os itens do cenário não acompanham o produto.',
+      26: 'Modelo + Esteira <br> Imagem Real <br> Escala 1/18. Tamanho entre 8cm e 11cm de altura. <br><strong>Observação:</strong>: Os itens do cenário não acompanham o produto.',
+      29: 'Modelo + 01 Pneu Resina <br> Imagem Real <br> Escala 1/18. Tamanho entre 8cm e 11cm de altura. <br><strong>Observação:</strong>: Os itens do cenário não acompanham o produto.',
       32: 'Modelo <br> Imagem Ilustrativa <br> Escala 1/18.',
       35: 'Modelo <br> Imagem Ilustrativa <br> Escala 1/18.',
       36: 'Modelo <br> Imagem Ilustrativa <br> Escala 1/18.',
@@ -842,7 +842,7 @@
 
           // Define descrição e preço usando os objetos de mapeamento
           let descricao = (descricoesEspeciais[i] || 
-            'Modelo <br> Imagem Real <br> Escala 1/18. Tamanho entre 8cm e 11cm de altura. <br> Observação: Os itens do cenário não acompanham o produto.') + 
+            'Modelo <br> Imagem Real <br> Escala 1/18. Tamanho entre 8cm e 11cm de altura. <br><strong>Observação:</strong>: Os itens do cenário não acompanham o produto.') + 
             observacaoPadrao;
           
           let preco = precosEspeciais[i] || 'R$ 60,00';
