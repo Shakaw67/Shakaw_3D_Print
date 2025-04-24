@@ -8,7 +8,7 @@
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      background: linear-gradient(to bottom, #0057b7, #06abff);
+      background: #00303f; /* Azul petróleo */
     }
     .header {
       text-align: center;
@@ -54,7 +54,8 @@
       overflow: hidden;
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      height: 400px; /* Altura fixa para o container */
+      height: 400px;
+      background: #00303f; /* Mesma cor do fundo */
     }
     .carousel {
       display: flex;
@@ -64,8 +65,8 @@
     .carousel img {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* Alterado de 'cover' para 'contain' para mostrar a imagem completa */
-      background-color: #f5f5f5; /* Fundo para imagens transparentes */
+      object-fit: contain;
+      background-color: #00303f; /* Mesma cor do fundo */
       flex-shrink: 0;
     }
     .carousel-btn {
@@ -138,7 +139,7 @@
     .main-img {
       width: 300px;
       height: 300px;
-      object-fit: contain; /* Alterado para 'contain' para mostrar a imagem completa */
+      object-fit: contain;
       background-color: #f5f5f5;
       padding: 10px;
       cursor: pointer;
@@ -202,16 +203,18 @@
       background-color: rgba(0,0,0,0.9);
     }
     .modal-content {
-      margin: 10% auto;
+      position: relative;
+      margin: auto;
       display: block;
       max-width: 90%;
-      max-height: 80vh;
+      max-height: 90vh;
       text-align: center;
     }
     .modal-content img {
       max-width: 100%;
       max-height: 80vh;
       object-fit: contain;
+      background-color: #00303f;
     }
     .close {
       position: absolute;
@@ -221,6 +224,30 @@
       font-size: 40px;
       font-weight: bold;
       cursor: pointer;
+      z-index: 100;
+    }
+    .modal-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      padding: 15px;
+      cursor: pointer;
+      z-index: 10;
+      border-radius: 50%;
+      font-size: 18px;
+      transition: background 0.3s;
+    }
+    .modal-nav:hover {
+      background: rgba(0,0,0,0.8);
+    }
+    .modal-prev {
+      left: 20px;
+    }
+    .modal-next {
+      right: 20px;
     }
     @media (max-width: 768px) {
       .product {
@@ -231,7 +258,11 @@
         max-width: 100%;
       }
       .carousel-container {
-        height: 250px; /* Altura menor para mobile */
+        height: 250px;
+      }
+      .modal-nav {
+        padding: 10px;
+        font-size: 16px;
       }
     }
 
@@ -429,10 +460,12 @@
 
   <!-- Modal para imagens ampliadas -->
   <div id="imgModal" class="modal">
-    <span class="close" onclick="document.getElementById('imgModal').style.display='none'">&times;</span>
+    <span class="close" onclick="closeModal()">&times;</span>
+    <button class="modal-nav modal-prev" onclick="navigateModal(-1)">❮</button>
     <div class="modal-content">
       <img id="modalImg" src="" alt="Imagem ampliada">
     </div>
+    <button class="modal-nav modal-next" onclick="navigateModal(1)">❯</button>
   </div>
 
   <!-- Modal para formulário de contato -->
@@ -493,6 +526,8 @@
     let currentSlide = 0;
     let carouselItems = [];
     let carouselInterval;
+    let currentModalImageIndex = 0;
+    let modalImages = [];
 
     // Objeto com os preços especiais
     const precosEspeciais = {
@@ -532,6 +567,9 @@
       47: 'Modelo <br> Imagem Ilustrativa <br> Escala 1/18.',
       48: 'Modelo <br> Imagem Ilustrativa <br> Escala 1/18.',
     };
+
+    // Observação padrão para todos os produtos
+    const observacaoPadrao = '<br><strong>Observação:</strong> Todos os produtos serão enviados em cores aleatórias disponíveis. Caso opte por alguma cor específica, informe no ato da solicitação.';
 
     // Função para verificar se uma imagem existe
     function checkImageExists(url, callback) {
@@ -648,6 +686,24 @@
       });
     }
 
+    // Função para navegar entre imagens no modal
+    function navigateModal(direction) {
+      currentModalImageIndex += direction;
+      
+      if (currentModalImageIndex >= modalImages.length) {
+        currentModalImageIndex = 0;
+      } else if (currentModalImageIndex < 0) {
+        currentModalImageIndex = modalImages.length - 1;
+      }
+      
+      document.getElementById('modalImg').src = modalImages[currentModalImageIndex].src;
+    }
+
+    // Função para fechar o modal
+    function closeModal() {
+      document.getElementById('imgModal').style.display = 'none';
+    }
+
     // Função para criar um produto
     async function createProduct(i) {
       const index = i.toString().padStart(2, '0');
@@ -671,6 +727,26 @@
           mainImg.alt = `Produto ${i}`;
           mainImg.className = 'main-img';
           mainImg.onclick = function() {
+            // Coletar todas as imagens disponíveis para este produto
+            modalImages = [mainImg];
+            
+            // Verificar miniaturas adicionais
+            const thumbnails = this.parentNode.querySelectorAll('.thumbnail-container img');
+            thumbnails.forEach(thumb => {
+              if (thumb.src !== mainImg.src) {
+                modalImages.push(thumb);
+              }
+            });
+            
+            // Encontrar o índice da imagem clicada
+            currentModalImageIndex = 0;
+            for (let j = 0; j < modalImages.length; j++) {
+              if (modalImages[j].src === this.src) {
+                currentModalImageIndex = j;
+                break;
+              }
+            }
+            
             document.getElementById('imgModal').style.display = 'block';
             document.getElementById('modalImg').src = this.src;
           };
@@ -711,8 +787,9 @@
           details.className = 'product-details';
 
           // Define descrição e preço usando os objetos de mapeamento
-          let descricao = descricoesEspeciais[i] || 
-            'Modelo <br> Imagem Real <br> Escala 1/18. Tamanho entre 8cm e 11cm de altura. <br> Observação: Os itens do cenário não acompanham o produto.';
+          let descricao = (descricoesEspeciais[i] || 
+            'Modelo <br> Imagem Real <br> Escala 1/18. Tamanho entre 8cm e 11cm de altura. <br> Observação: Os itens do cenário não acompanham o produto.') + 
+            observacaoPadrao;
           
           let preco = precosEspeciais[i] || 'R$ 60,00';
 
@@ -909,19 +986,15 @@
       }
       
       interests.length = 0;
-      updateInterestList();
-    });
-
-    // Inicializa a página
-    window.onload = function() {
-      initCarousel();
-      loadProducts();
-      
-      const btn = document.getElementById("backToTopBtn");
-      window.onscroll = function() {
-        btn.style.display = window.scrollY > 200 ? "block" : "none";
-      };
-    };
-  </script>
-</body>
-</html>
+updateInterestList();
+});
+// Inicializa a página
+window.onload = function() {
+  initCarousel();
+  loadProducts();
+  
+  const btn = document.getElementById("backToTopBtn");
+  window.onscroll = function() {
+    btn.style.display = window.scrollY > 200 ? "block" : "none";
+  };
+};
