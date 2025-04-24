@@ -215,6 +215,8 @@
       max-height: 80vh;
       object-fit: contain;
       background-color: #00303f;
+      transform-origin: center center;
+      transition: transform 0.3s ease;
     }
     .close {
       position: absolute;
@@ -249,6 +251,27 @@
     .modal-next {
       right: 20px;
     }
+    /* Estilos para os controles de zoom */
+    .zoom-controls {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      padding: 10px;
+      border-radius: 5px;
+      display: flex;
+      gap: 5px;
+      z-index: 10000;
+    }
+    .zoom-controls button {
+      background: #fff;
+      border: none;
+      border-radius: 3px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
     @media (max-width: 768px) {
       .product {
         flex-direction: column;
@@ -263,6 +286,9 @@
       .modal-nav {
         padding: 10px;
         font-size: 16px;
+      }
+      .zoom-controls {
+        bottom: 10px;
       }
     }
 
@@ -466,6 +492,12 @@
       <img id="modalImg" src="" alt="Imagem ampliada">
     </div>
     <button class="modal-nav modal-next" onclick="navigateModal(1)">❯</button>
+    <!-- Controles de zoom -->
+    <div class="zoom-controls">
+      <button onclick="zoomImage(0.2)">+</button>
+      <button onclick="zoomImage(-0.2)">-</button>
+      <button onclick="resetZoom()">Reset</button>
+    </div>
   </div>
 
   <!-- Modal para formulário de contato -->
@@ -528,6 +560,7 @@
     let carouselInterval;
     let currentModalImageIndex = 0;
     let modalImages = [];
+    let currentZoom = 1; // Variável para controlar o zoom
 
     // Objeto com os preços especiais
     const precosEspeciais = {
@@ -686,6 +719,24 @@
       });
     }
 
+    // Função para aplicar zoom
+    function zoomImage(zoomFactor) {
+      const modalImg = document.getElementById('modalImg');
+      currentZoom += zoomFactor;
+      
+      // Limites mínimos e máximos de zoom
+      if (currentZoom < 0.5) currentZoom = 0.5;
+      if (currentZoom > 3) currentZoom = 3;
+      
+      modalImg.style.transform = `scale(${currentZoom})`;
+    }
+
+    // Função para resetar o zoom
+    function resetZoom() {
+      currentZoom = 1;
+      document.getElementById('modalImg').style.transform = 'scale(1)';
+    }
+
     // Função para navegar entre imagens no modal
     function navigateModal(direction) {
       currentModalImageIndex += direction;
@@ -697,11 +748,13 @@
       }
       
       document.getElementById('modalImg').src = modalImages[currentModalImageIndex].src;
+      resetZoom(); // Resetar zoom ao mudar de imagem
     }
 
     // Função para fechar o modal
     function closeModal() {
       document.getElementById('imgModal').style.display = 'none';
+      resetZoom(); // Resetar zoom ao fechar
     }
 
     // Função para criar um produto
@@ -749,6 +802,7 @@
             
             document.getElementById('imgModal').style.display = 'block';
             document.getElementById('modalImg').src = this.src;
+            resetZoom(); // Resetar zoom ao abrir nova imagem
           };
 
           const thumbnails = document.createElement('div');
@@ -985,7 +1039,7 @@
         return;
       }
       
-        interests.length = 0;
+      interests.length = 0;
       updateInterestList();
     });
 
